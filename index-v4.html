@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO & META -->
+    <title>Cuida+ | Organize seus medicamentos e domine sua rotina de saúde</title>
+    <meta name="description" content="O centro de comando da sua saúde. Pare de esquecer seus remédios e organize sua rotina hoje com o Cuida+.">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            0: '#000000',
+                            100: '#0B0F1A', 
+                            200: '#11192B', 
+                            300: '#1F2937', 
+                            card: '#161C2C',
+                            border: 'rgba(255, 255, 255, 0.05)' 
+                        },
+                        brand: {
+                            blue: '#2F6BFF',
+                            magenta: '#FF3D8E',
+                            emerald: '#22C55E',
+                            amber: '#F59E0B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Outfit', 'Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '3rem',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root { color-scheme: dark; }
+        body {
+            background-color: #0B0F1A;
+            color: #F8FAFC;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* PREMIUM FINISH */
+        .grain::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HERO APP MOCKUP */
+        .iphone-frame {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 4.5rem;
+            padding: 0.8rem;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.1),
+                0 50px 100px -20px rgba(0,0,0,0.8);
+        }
+        .iphone-screen {
+            position: relative;
+            border-radius: 3.8rem;
+            overflow: hidden;
+            aspect-ratio: 9 / 19.5;
+            background: #000;
+        }
+        .iphone-screen img {
+            width: 100%;
+            height: calc(100% + 38px);
+            object-fit: cover;
+            object-position: top center;
+            margin-top: -34px; /* HIDE STATUS BAR / TOP PRINT AREA */
+            display: block;
+        }
+        .app-screen-flat-wrap {
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+        .app-screen-flat {
+            width: 100%;
+            height: calc(100% + 68px);
+            object-fit: cover;
+            object-position: top center;
+            margin-top: -64px; /* HIDE APP STATUS BAR */
+            display: block;
+        }
+        .iphone-island {
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85px;
+            height: 26px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 20;
+        }
+
+        .btn-premium {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+            box-shadow: 0 20px 40px -10px rgba(47, 107, 255, 0.4);
+        }
+
+        .glass-card {
+            background: rgba(22, 28, 44, 0.6);
+            backdrop-blur: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(47, 107, 255, 0.2);
+            background: rgba(22, 28, 44, 0.8);
+        }
+
+        .badge-official {
+            height: 48px;
+            transition: all 0.3s ease;
+        }
+        .badge-official:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+        .store-badges {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .store-badge {
+            width: 11rem;
+            height: 3.55rem;
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.72rem;
+            padding: 0 0.95rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(220, 228, 242, 0.5);
+            background: #06090f;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+            transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease;
+        }
+        .store-badge:hover {
+            transform: translateY(-1px);
+            border-color: rgba(220, 228, 242, 0.72);
+        }
+        .store-badge-icon {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .store-badge-icon--apple svg {
+            width: 1.72rem;
+            height: 2rem;
+            fill: #ffffff;
+        }
+        .store-badge-icon--google svg {
+            width: 1.9rem;
+            height: 1.9rem;
+        }
+        .store-badge-copy {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1;
+            min-width: 0;
+        }
+        .store-badge-kicker {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            color: #dbe3ef;
+            white-space: nowrap;
+        }
+        .store-badge-kicker--uppercase {
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .store-badge-title {
+            margin-top: 0.18rem;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+        .stars {
+            letter-spacing: 0.15em;
+            color: #f7c948;
+        }
+    </style>
+</head>
+<body class="grain selection:bg-brand-blue/30 overflow-x-hidden font-sans">
+
+    <!-- HEADER -->
+    <nav class="fixed top-0 inset-x-0 z-[100] bg-dark-100/80 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+            <a href="#hero" class="flex items-center">
+                <img src="https://cuidamais.com.br/static/media/cuida-logo-desktop.063e67ec39af7ced6e4fe3f9d3eeaa25.svg" alt="Cuida+" class="h-8">
+            </a>
+            <a href="#hero-downloads" class="btn-premium bg-brand-blue px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest text-white shadow-xl" data-ab-key="navCta">
+                Começar agora (grátis)
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero" class="relative pt-32 sm:pt-36 lg:pt-44 pb-16 lg:pb-20 overflow-hidden">
+        <div class="absolute top-0 right-0 w-[700px] h-[700px] bg-brand-blue/10 blur-[140px] -z-10"></div>
+
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="grid lg:grid-cols-[1.02fr_0.98fr] gap-12 lg:gap-14 items-center">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 bg-brand-blue/10 border border-brand-blue/20 rounded-full mb-6">
+                        <span class="w-2 h-2 rounded-full bg-brand-blue"></span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-brand-blue">Rotina de medicação sem esquecimento</span>
+                    </div>
+
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[0.95] tracking-tight mb-6" data-ab-key="heroHeadline">
+                        Pare de esquecer seus remédios e organize sua rotina hoje
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-white/55 max-w-2xl mb-8 leading-relaxed" data-ab-key="heroSubheadline">
+                        Organize seus medicamentos, receba alertas no horário certo e acompanhe o que já foi tomado, sem depender da memória.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mb-7">
+                        <a href="#hero-downloads" class="btn-premium bg-brand-blue px-8 py-4 rounded-full text-base font-bold text-white text-center" data-ab-key="heroPrimaryCta" data-smart-store="true">
+                            Quero organizar meus remédios
+                        </a>
+                        <a href="#how" class="btn-premium border border-brand-blue/50 bg-dark-200 px-8 py-4 rounded-full text-base font-bold text-white text-center" data-ab-key="heroSecondaryCta">
+                            Começar minha rotina
+                        </a>
+                    </div>
+
+                    <div id="hero-downloads" class="store-badges mb-7">
+                        <a href="https://apps.apple.com/br/app/cuida/id6757086767" target="_blank" class="store-badge" aria-label="Baixar na App Store">
+                            <span class="store-badge-icon store-badge-icon--apple" aria-hidden="true">
+                                <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-37.8 16.8-66.8 51.1-87.8-19.2-27.3-47.8-42.3-85.7-45.1-35.7-2.8-74.8 20.9-89.1 20.9-15.2 0-49.8-19.9-77-19.9C61.6 137.7 0 185.2 0 291.9c0 31.5 5.8 64 17.3 97.4 15.4 44.3 70.8 152.5 128.6 150.7 30.2-.8 51.6-21.5 90.9-21.5 38.1 0 57.9 21.5 91.6 21.5 58.3-.8 108.4-99.1 123-143.5-85.5-40.2-82.7-121.2-82.7-127.8zM257.8 74.4C285.1 41.8 282.8 12 282 0c-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 72.2 26 2 53.5-11.3 69.3-32.7z"/></svg>
+                            </span>
+                            <span class="store-badge-copy">
+                                <span class="store-badge-kicker">Baixar na</span>
+                                <span class="store-badge-title">App Store</span>
+                            </span>
+                        </a>
+                        <a href="https://play.google.com/store/apps/details?id=br.com.cuidamais.appcuidamais" target="_blank" class="store-badge" aria-label="Disponível no Google Play">
+                            <span class="store-badge-icon store-badge-icon--google" aria-hidden="true">
+                                <svg viewBox="0 0 32 32">
+                                    <path fill="#34A853" d="M3.8 2.6l15.5 15.5-5.2 5.2L3.8 29.4c-.7-.4-1.1-1.1-1.1-1.9V4.5c0-.8.4-1.5 1.1-1.9z"/>
+                                    <path fill="#4285F4" d="M24.2 13.7l-4.9 4.4L3.8 2.6c.3-.2.6-.3 1-.3.4 0 .9.1 1.3.3l18.1 10.4z"/>
+                                    <path fill="#FBBC04" d="M24.2 18.4L6.1 28.8c-.4.2-.9.3-1.3.3-.4 0-.7-.1-1-.3l15.5-10.7 4.9.3z"/>
+                                    <path fill="#EA4335" d="M29.3 16c0 .9-.5 1.7-1.3 2.2l-3.8 2.2-4.9-2.3 4.9-4.4 3.8 2.2c.8.5 1.3 1.3 1.3 2.1z"/>
+                                </svg>
+                            </span>
+                            <span class="store-badge-copy">
+                                <span class="store-badge-kicker store-badge-kicker--uppercase">Disponível no</span>
+                                <span class="store-badge-title">Google Play</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3 text-sm text-white/55 max-w-lg">
+                        <p class="flex items-center gap-3"><i data-lucide="sparkles" class="w-4 h-4 text-brand-magenta"></i>Leva menos de 2 minutos</p>
+                        <p class="flex items-center gap-3"><i data-lucide="check-check" class="w-4 h-4 text-brand-blue"></i>Configure uma vez e pronto</p>
+                        <p class="flex items-center gap-3"><i data-lucide="shield-check" class="w-4 h-4 text-brand-emerald"></i>Simples de usar no dia a dia</p>
+                    </div>
+                </div>
+
+                <div class="reveal relative">
+                    <div class="iphone-frame">
+                        <div class="iphone-island"></div>
+                        <div class="iphone-screen">
+                            <img src="assets/app-screens/IMG_9414.PNG" alt="Tela do app Cuida+">
+                        </div>
+                    </div>
+                    <div class="absolute -left-6 bottom-1/4">
+                        <div class="glass-card p-4 rounded-3xl border-white/10 shadow-2xl">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-emerald/20 text-brand-emerald flex items-center justify-center">
+                                    <i data-lucide="check" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold">Dose confirmada</p>
+                                    <p class="text-[11px] text-white/45">Acompanhamento em dia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARA QUEM E -->
+    <section id="for-who" class="py-16 lg:py-20 border-t border-white/5 bg-dark-0/30">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="mb-10 reveal">
+                <h2 class="font-display text-3xl lg:text-5xl font-extrabold tracking-tight mb-4">Para quem o Cuida+ funciona melhor</h2>
+                <p class="text-white/50 max-w-2xl">Se você se perde com horários, doses e reposição, o app foi feito para o seu dia a dia.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <h3 class="font-bold text-xl mb-2">Quem toma vários remédios</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Mantém horários e doses organizados sem depender da memória.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <h3 class="font-bold text-xl mb-2">Quem cuida de alguém</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Acompanha a rotina de pais, avós ou familiares com mais clareza.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-200">
+                    <h3 class="font-bold text-xl mb-2">Quem quer evitar imprevistos</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Recebe alerta de estoque e consulta preço antes de repor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFICIOS -->
+    <section id="benefits" class="py-16 lg:py-20">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="mb-10 reveal">
+                <h2 class="font-display text-3xl lg:text-5xl font-extrabold tracking-tight mb-4">O que muda na rotina quando voce usa o app</h2>
+                <p class="text-white/50 max-w-2xl">Foco no que realmente ajuda a manter o tratamento em dia.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-blue/15 text-brand-blue flex items-center justify-center mb-5">
+                        <i data-lucide="bell-ring" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">1. Alertas</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Você recebe aviso no horário certo para reduzir esquecimentos.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-magenta/15 text-brand-magenta flex items-center justify-center mb-5">
+                        <i data-lucide="list-checks" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">2. Controle</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Marca o que tomou e para de ficar na duvida sobre cada dose.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-200">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-amber/15 text-brand-amber flex items-center justify-center mb-5">
+                        <i data-lucide="package" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">3. Estoque</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Avisa quando esta acabando para você repor sem correria.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-300">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-emerald/15 text-brand-emerald flex items-center justify-center mb-5">
+                        <i data-lucide="badge-dollar-sign" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold mb-3">4. Economia</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Compara valores para apoiar sua decisão de compra.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESQUECIMENTO -->
+    <section id="forgetfulness" class="py-16 lg:py-20 border-t border-white/5 bg-dark-0/30">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="grid lg:grid-cols-[1fr_1.05fr] gap-6 lg:gap-8 items-start">
+                <div class="reveal">
+                    <p class="text-[11px] uppercase tracking-[0.2em] text-brand-blue font-bold mb-4">Para quem toma varios remedios</p>
+                    <h2 class="font-display text-3xl lg:text-5xl font-extrabold tracking-tight mb-4">Quando os horarios se acumulam, esquecer fica facil.</h2>
+                    <p class="text-white/50 leading-relaxed max-w-xl mb-6">
+                        O Cuida+ ajuda você a lembrar as doses, registrar o que já tomou e acompanhar o estoque sem depender só da memória.
+                    </p>
+                    <div class="space-y-3 text-sm text-white/70">
+                        <div class="flex items-start gap-3">
+                            <span class="mt-0.5 text-brand-blue"><i data-lucide="bell-ring" class="w-4 h-4"></i></span>
+                            <p>Receba alertas na hora certa para não deixar uma dose passar.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="mt-0.5 text-brand-magenta"><i data-lucide="circle-check-big" class="w-4 h-4"></i></span>
+                            <p>Marque a dose e saiba com clareza o que já foi tomado.</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="mt-0.5 text-brand-amber"><i data-lucide="package-search" class="w-4 h-4"></i></span>
+                            <p>Veja antes quando o remédio está acabando para repor com calma.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-5 reveal delay-100">
+                    <div class="glass-card p-7 lg:p-8 rounded-4xl min-h-[260px] lg:min-h-[290px]">
+                        <h3 class="font-bold text-lg mb-3">Perdeu um horário?</h3>
+                        <p class="text-sm text-white/45 leading-relaxed">O alerta ajuda você a lembrar na hora certa.</p>
+                    </div>
+                    <div class="glass-card p-7 lg:p-8 rounded-4xl min-h-[260px] lg:min-h-[290px]">
+                        <h3 class="font-bold text-lg mb-3">Ficou na dúvida?</h3>
+                        <p class="text-sm text-white/45 leading-relaxed">O registro mostra o que já foi tomado no dia.</p>
+                    </div>
+                    <div class="glass-card p-7 lg:p-8 rounded-4xl min-h-[260px] lg:min-h-[290px]">
+                        <h3 class="font-bold text-lg mb-3">Acabou sem aviso?</h3>
+                        <p class="text-sm text-white/45 leading-relaxed">O estoque avisa antes para você repor com calma.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ECONOMIA APOIO -->
+    <section id="economy" class="py-16 bg-dark-100/50 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-5 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center">
+            <div class="reveal">
+                <p class="text-[11px] uppercase tracking-[0.2em] text-brand-emerald font-bold mb-4">Beneficio de apoio</p>
+                <h2 class="font-display text-3xl lg:text-4xl font-extrabold tracking-tight mb-4">Compare preços antes de repor</h2>
+                <p class="text-white/50 leading-relaxed mb-6 max-w-xl">
+                    O foco principal do Cuida+ continua sendo rotina e adesão. A consulta de preços entra para ajudar na reposição quando você precisar.
+                </p>
+                <div class="glass-card rounded-4xl p-5 max-w-xl">
+                    <div class="flex items-center justify-between py-2 border-b border-white/5">
+                        <span class="text-white/75">Drogasil</span>
+                        <strong class="text-brand-emerald">R$ 38,90</strong>
+                    </div>
+                    <div class="flex items-center justify-between py-2 border-b border-white/5">
+                        <span class="text-white/75">Droga Raia</span>
+                        <strong class="text-white/50">R$ 44,50</strong>
+                    </div>
+                    <div class="flex items-center justify-between py-2">
+                        <span class="text-white/75">Pague Menos</span>
+                        <strong class="text-white/50">R$ 47,20</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal delay-100">
+                <div class="glass-card p-8 rounded-5xl">
+                    <div class="app-screen-flat-wrap rounded-3xl shadow-xl border border-white/10 mx-auto">
+                        <img src="assets/app-screens/IMG_9413.PNG" class="app-screen-flat" alt="Comparador no app">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="how" class="py-16 lg:py-20">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="mb-10 reveal">
+                <h2 class="font-display text-3xl lg:text-5xl font-extrabold tracking-tight mb-4">Como funciona na pratica</h2>
+                <p class="text-white/50 max-w-2xl">Fluxo simples para sair do esquecimento e entrar no controle.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-4">
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <p class="text-xs uppercase tracking-widest text-white/35 font-bold mb-3">Passo 1</p>
+                    <h3 class="font-bold text-xl mb-3">Baixe e comece</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Instale no iPhone ou Android e abra seu primeiro cadastro.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <p class="text-xs uppercase tracking-widest text-white/35 font-bold mb-3">Passo 2</p>
+                    <h3 class="font-bold text-xl mb-3">Configure horarios e doses</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Defina rotina continua ou eventual em poucos toques.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-200">
+                    <p class="text-xs uppercase tracking-widest text-white/35 font-bold mb-3">Passo 3</p>
+                    <h3 class="font-bold text-xl mb-3">Receba alertas e acompanhe</h3>
+                    <p class="text-sm text-white/45 leading-relaxed">Marque cada dose, acompanhe estoque e mantenha constancia.</p>
+                </div>
+            </div>
+
+            <div class="store-badges justify-center mt-10 reveal">
+                <a href="https://apps.apple.com/br/app/cuida/id6757086767" target="_blank" class="store-badge" aria-label="Baixar na App Store">
+                    <span class="store-badge-icon store-badge-icon--apple" aria-hidden="true">
+                        <svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-37.8 16.8-66.8 51.1-87.8-19.2-27.3-47.8-42.3-85.7-45.1-35.7-2.8-74.8 20.9-89.1 20.9-15.2 0-49.8-19.9-77-19.9C61.6 137.7 0 185.2 0 291.9c0 31.5 5.8 64 17.3 97.4 15.4 44.3 70.8 152.5 128.6 150.7 30.2-.8 51.6-21.5 90.9-21.5 38.1 0 57.9 21.5 91.6 21.5 58.3-.8 108.4-99.1 123-143.5-85.5-40.2-82.7-121.2-82.7-127.8zM257.8 74.4C285.1 41.8 282.8 12 282 0c-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 72.2 26 2 53.5-11.3 69.3-32.7z"/></svg>
+                    </span>
+                    <span class="store-badge-copy">
+                        <span class="store-badge-kicker">Baixar na</span>
+                        <span class="store-badge-title">App Store</span>
+                    </span>
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=br.com.cuidamais.appcuidamais" target="_blank" class="store-badge" aria-label="Disponível no Google Play">
+                    <span class="store-badge-icon store-badge-icon--google" aria-hidden="true">
+                        <svg viewBox="0 0 32 32">
+                            <path fill="#34A853" d="M3.8 2.6l15.5 15.5-5.2 5.2L3.8 29.4c-.7-.4-1.1-1.1-1.1-1.9V4.5c0-.8.4-1.5 1.1-1.9z"/>
+                            <path fill="#4285F4" d="M24.2 13.7l-4.9 4.4L3.8 2.6c.3-.2.6-.3 1-.3.4 0 .9.1 1.3.3l18.1 10.4z"/>
+                            <path fill="#FBBC04" d="M24.2 18.4L6.1 28.8c-.4.2-.9.3-1.3.3-.4 0-.7-.1-1-.3l15.5-10.7 4.9.3z"/>
+                            <path fill="#EA4335" d="M29.3 16c0 .9-.5 1.7-1.3 2.2l-3.8 2.2-4.9-2.3 4.9-4.4 3.8 2.2c.8.5 1.3 1.3 1.3 2.1z"/>
+                        </svg>
+                    </span>
+                    <span class="store-badge-copy">
+                        <span class="store-badge-kicker store-badge-kicker--uppercase">Disponível no</span>
+                        <span class="store-badge-title">Google Play</span>
+                    </span>
+                </a>
+            </div>
+            <p class="text-center text-sm text-white/45 mt-5 reveal">Leva menos de 2 minutos. Configure uma vez e pronto.</p>
+        </div>
+    </section>
+
+    <!-- PROVA SOCIAL -->
+    <section id="social-proof" class="py-16 lg:py-20 bg-dark-100/50 border-y border-white/5">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="mb-10 reveal">
+                <h2 class="font-display text-3xl lg:text-5xl font-extrabold tracking-tight mb-4">Quem usa sente diferenca na rotina</h2>
+                <p class="text-white/50 max-w-2xl">Clareza, constancia e menos correria fazem diferença quando a rotina de medicação precisa funcionar de verdade.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 mb-8">
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <p class="text-2xl font-extrabold mb-2">Feito para rotina real</p>
+                    <p class="text-sm text-white/45">Para quem toma varios remedios e precisa de mais constancia no dia a dia.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <p class="text-3xl font-extrabold mb-2">Uso contínuo</p>
+                    <p class="text-sm text-white/45">Foco em adesão diária e constância na rotina de medicação.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-200">
+                    <p class="text-3xl font-extrabold mb-2">2 min</p>
+                    <p class="text-sm text-white/45">Tempo médio para configurar e começar.</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <p class="text-sm text-white/70 leading-relaxed mb-4">"Agora eu sei exatamente o que já foi tomado e o que falta no dia."</p>
+                    <p class="text-xs uppercase tracking-widest text-white/35">Rotina com varios medicamentos</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <p class="text-sm text-white/70 leading-relaxed mb-4">"Com os alertas, ficou muito mais tranquilo cuidar da medicação da minha mãe."</p>
+                    <p class="text-xs uppercase tracking-widest text-white/35">Cuidado com familiar</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-200">
+                    <p class="text-sm text-white/70 leading-relaxed mb-4">"Parou a correria de descobrir que o remédio acabou de última hora."</p>
+                    <p class="text-xs uppercase tracking-widest text-white/35">Reposição sem correria</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-16 lg:py-20">
+        <div class="max-w-4xl mx-auto px-5">
+            <div class="mb-8 reveal">
+                <h2 class="font-display text-3xl lg:text-5xl font-extrabold tracking-tight mb-4">Duvidas frequentes</h2>
+                <p class="text-white/50">Respostas diretas para as principais objeções antes de começar.</p>
+            </div>
+            <div class="space-y-3">
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <h4 class="font-bold text-lg mb-3">O app é gratuito?</h4>
+                    <p class="text-white/45 text-sm leading-relaxed">Sim. Você pode baixar e começar a usar sem custo inicial.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <h4 class="font-bold text-lg mb-3">Preciso usar todo dia para funcionar?</h4>
+                    <p class="text-white/45 text-sm leading-relaxed">Você configura a rotina e os alertas ajudam automaticamente no dia a dia.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-200">
+                    <h4 class="font-bold text-lg mb-3">Depois de configurar, ele funciona sozinho?</h4>
+                    <p class="text-white/45 text-sm leading-relaxed">Sim. Os lembretes seguem os horários definidos e você só confirma as doses.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-300">
+                    <h4 class="font-bold text-lg mb-3">Posso cadastrar remédios contínuos e eventuais?</h4>
+                    <p class="text-white/45 text-sm leading-relaxed">Pode. O app foi pensado para rotinas simples e também para tratamentos com vários medicamentos.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal">
+                    <h4 class="font-bold text-lg mb-3">Serve para cuidar da medicação de outra pessoa?</h4>
+                    <p class="text-white/45 text-sm leading-relaxed">Sim. Você pode usar o app para acompanhar a medicação de familiares.</p>
+                </div>
+                <div class="glass-card p-6 rounded-4xl reveal delay-100">
+                    <h4 class="font-bold text-lg mb-3">Ele avisa quando o remédio está acabando?</h4>
+                    <p class="text-white/45 text-sm leading-relaxed">Sim. O controle de estoque avisa com antecedência para você repor com calma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-20 text-center relative overflow-hidden border-t border-white/5">
+        <div class="absolute inset-0 bg-brand-blue/5 -z-10"></div>
+        <div class="max-w-4xl mx-auto px-5 reveal">
+            <h2 class="font-display text-4xl lg:text-6xl font-extrabold mb-6 tracking-tight" data-ab-key="finalHeadline">Comece sua rotina hoje</h2>
+            <p class="text-white/55 text-lg mb-8">Menos esquecimento, mais controle e mais tranquilidade no tratamento.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-7">
+                <a href="#hero-downloads" class="btn-premium bg-brand-blue px-10 py-4 rounded-full text-lg font-bold text-white" data-ab-key="finalPrimaryCta">
+                    Começar agora (grátis)
+                </a>
+                <a href="#hero-downloads" class="btn-premium border border-brand-blue/50 bg-dark-200 px-10 py-4 rounded-full text-lg font-bold text-white" data-ab-key="finalSecondaryCta">
+                    Quero organizar meus remédios
+                </a>
+            </div>
+            <p class="text-sm text-white/45">Simples de usar no dia a dia.</p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-14 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div>
+                <img src="https://cuidamais.com.br/static/media/cuida-logo-desktop.063e67ec39af7ced6e4fe3f9d3eeaa25.svg" class="h-7 mb-3" alt="Cuida+">
+                <p class="text-sm text-white/40 max-w-md">Cuida+ para organizar medicação, reduzir esquecimentos e manter o cuidado em dia.</p>
+            </div>
+            <div class="flex gap-8 text-xs font-bold uppercase tracking-widest text-white/40">
+                <a href="sobre.html" class="hover:text-white transition">Sobre</a>
+                <a href="termos-e-privacidade.html" class="hover:text-white transition">Termos e Privacidade</a>
+                <a href="https://www.instagram.com/cuida.mais/" target="_blank" class="hover:text-white transition">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const APP_STORE_URL = 'https://apps.apple.com/br/app/cuida/id6757086767';
+        const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=br.com.cuidamais.appcuidamais';
+
+        function detectStoreTarget() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera || '';
+            const isAndroid = /android/i.test(userAgent);
+            const isIPhone = /iPhone/i.test(userAgent);
+            const isIPad = /iPad/i.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            const isIOS = isIPhone || isIPad;
+
+            if (isAndroid) return PLAY_STORE_URL;
+            if (isIOS) return APP_STORE_URL;
+            return null;
+        }
+
+        function bindSmartStoreCta() {
+            document.querySelectorAll('[data-smart-store="true"]').forEach((button) => {
+                button.addEventListener('click', (event) => {
+                    const storeUrl = detectStoreTarget();
+                    if (!storeUrl) return;
+                    event.preventDefault();
+                    window.location.href = storeUrl;
+                });
+            });
+        }
+
+        function applyAbVariant() {
+            const params = new URLSearchParams(window.location.search);
+            const ab = (params.get('ab') || 'a').toLowerCase();
+            const variants = {
+                b: {
+                    navCta: 'Quero organizar meus remédios',
+                    heroHeadline: 'Mais controle da sua medicação, menos esquecimento no dia a dia',
+                    heroSubheadline: 'Cadastre seus remédios, receba alertas no horário certo e mantenha sua rotina sob controle.',
+                    heroPrimaryCta: 'Começar agora (grátis)',
+                    heroSecondaryCta: 'Quero receber alertas',
+                    finalHeadline: 'Pare de esquecer seus remédios hoje',
+                    finalPrimaryCta: 'Começar agora (grátis)',
+                    finalSecondaryCta: 'Quero receber alertas'
+                },
+                c: {
+                    navCta: 'Começar minha rotina',
+                    heroHeadline: 'Organize seus remédios e pare de perder horários importantes',
+                    heroSubheadline: 'Você configura uma vez e o app ajuda no dia a dia com alertas, controle e aviso de estoque.',
+                    heroPrimaryCta: 'Começar minha rotina',
+                    heroSecondaryCta: 'Quero organizar meus remédios',
+                    finalHeadline: 'Sua rotina de medicação em dia, com alertas na hora certa',
+                    finalPrimaryCta: 'Começar minha rotina',
+                    finalSecondaryCta: 'Quero organizar meus remédios'
+                }
+            };
+            const selected = variants[ab];
+            if (!selected) return;
+            Object.entries(selected).forEach(([key, text]) => {
+                document.querySelectorAll(`[data-ab-key="${key}"]`).forEach((node) => {
+                    node.textContent = text;
+                });
+            });
+        }
+        applyAbVariant();
+        bindSmartStoreCta();
+        lucide.createIcons();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
